@@ -42,10 +42,7 @@ class LocationResponse(LocationCreate):
     """Схема ответа с данными локации."""
     id: int
     capacity: int
-
-    class Config:
-        """Настройки Pydantic."""
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
 class SessionCreate(BaseModel):
     """Схема создания сеанса."""
