@@ -1,6 +1,9 @@
+"""Модуль конфигурации и подключения к базе данных"""
+
 import os
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./pool.db")
 
@@ -9,12 +12,12 @@ if "sqlite" in DATABASE_URL:
 else:
     engine = create_engine(DATABASE_URL)
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SESSION_LOCAL = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 def get_db():
-    """Генератор сессий БД"""
-    db = SessionLocal()
+    """Генератор сессий для подключения к БД"""
+    db = SESSION_LOCAL()
     try:
         yield db
     finally:
